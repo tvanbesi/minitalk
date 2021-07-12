@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:28:47 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 15:01:04 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/12 16:09:30 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int
 	sigaction(SIGUSR1, &sig1, NULL);
 	sigaction(SIGUSR2, &sig2, NULL);
 	pid = getpid();
-	ft_putnbr_fd(pid, 1);
+	ft_putnbr_fd(pid, STDOUT);
 	while (1)
 	{
 		pause();

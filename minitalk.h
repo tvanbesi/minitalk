@@ -4,10 +4,12 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <signal.h>
+# include <stdlib.h>
 
 //REMOVE FOR DEFENCE
 # include <errno.h>
 # include <string.h>
+# include <stdio.h>
 
 # define	STDOUT	1
 # define	STDIN	0
@@ -22,5 +24,8 @@ int		ft_atoi(const char *str);
 int		ft_isspace(int c);
 int		ft_isdigit(int c);
 size_t	ft_strlen(const char *str);
+
+char	*ctobs(int n);
+int		bstoc(const char *bs);
 
 #endif
