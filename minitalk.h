@@ -26,6 +26,6 @@ int		ft_isdigit(int c);
 size_t	ft_strlen(const char *str);
 
 char	*ctobs(int n);
-int		bstoc(const char *bs);
+int		bstoc(const char bs[8]);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 15:20:39 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 16:09:10 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/12 16:35:45 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int
 }
 
 int
-	bstoc(const char *bs)
+	bstoc(const char bs[8])
 {
 	int	r;
 	int	i;

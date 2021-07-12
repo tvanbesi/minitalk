@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:28:47 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 16:09:30 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/12 16:43:47 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,35 @@
 
 static pid_t	g_spid = 0;
 
+static void
+	interpret_message(int b)
+{
+	static char	character[8];
+	static int	i = 0;
+	int			char_n;
+
+	character[i] = b + '0';
+	i++;
+	if (i == 8)
+	{
+		char_n = bstoc(character);
+		ft_putchar_fd(char_n, STDOUT);
+		i = 0;
+	}
+	return ;
+}
+
 void
 	sig1_handler(int n, siginfo_t *info, void *ucontext)
 {
-	write(STDOUT, "S1", 2);
+	interpret_message(0);
 	g_spid = info->si_pid;
 }
 
 void
 	sig2_handler(int n, siginfo_t *info, void *ucontext)
 {
-	write(STDOUT, "S2", 2);
+	interpret_message(1);
 	g_spid = info->si_pid;
 }
 
@@ -49,6 +67,7 @@ int
 	sigaction(SIGUSR2, &sig2, NULL);
 	pid = getpid();
 	ft_putnbr_fd(pid, STDOUT);
+	write(STDOUT, "\n", 1);
 	while (1)
 	{
 		pause();
