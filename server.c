@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:28:47 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 16:43:47 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/12 16:48:41 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,32 @@ void
 	g_spid = info->si_pid;
 }
 
+void
+	init_sig(struct sigaction *sig1, struct sigaction *sig2)
+{
+	sigset_t			sig1_mask;
+	sigset_t			sig2_mask;
+
+	sigemptyset(&sig1_mask);
+	sigemptyset(&sig2_mask);
+	sig1->sa_mask = sig1_mask;
+	sig2->sa_mask = sig2_mask;
+	sig1->sa_flags = SA_SIGINFO;
+	sig2->sa_flags = SA_SIGINFO;
+	sig1->sa_sigaction = sig1_handler;
+	sig2->sa_sigaction = sig2_handler;
+	sigaction(SIGUSR1, sig1, NULL);
+	sigaction(SIGUSR2, sig2, NULL);
+}
+
 int
 	main(void)
 {
 	pid_t				pid;
 	struct sigaction	sig1;
-	sigset_t			sig1_mask;
 	struct sigaction	sig2;
-	sigset_t			sig2_mask;
 
-	sigemptyset(&sig1_mask);
-	sigemptyset(&sig2_mask);
-	sig1.sa_mask = sig1_mask;
-	sig2.sa_mask = sig2_mask;
-	sig1.sa_flags = SA_SIGINFO;
-	sig2.sa_flags = SA_SIGINFO;
-	sig1.sa_sigaction = sig1_handler;
-	sig2.sa_sigaction = sig2_handler;
-	sigaction(SIGUSR1, &sig1, NULL);
-	sigaction(SIGUSR2, &sig2, NULL);
+	init_sig(&sig1, &sig2);
 	pid = getpid();
 	ft_putnbr_fd(pid, STDOUT);
 	write(STDOUT, "\n", 1);

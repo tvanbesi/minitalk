@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:51:57 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 16:44:34 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/12 16:51:28 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 void
 	sig1_handler(int n)
 {
+}
+
+static void
+	send_bit(int b, pid_t pid)
+{
+	if (b == '0')
+		kill(pid, SIGUSR1);
+	else if (b == '1')
+		kill(pid, SIGUSR2);
 }
 
 int
@@ -36,10 +45,7 @@ int
 		i = 0;
 		while (i++ < 8)
 		{
-			if (bs[i - 1] == '0')
-				kill(pid, SIGUSR1);
-			else if (bs[i - 1] == '1')
-				kill(pid, SIGUSR2);
+			send_bit(bs[i - 1], pid);
 			pause();
 		}
 		free(bs);
