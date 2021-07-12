@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:28:47 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 16:48:41 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:27:54 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,11 @@ void
 void
 	init_sig(struct sigaction *sig1, struct sigaction *sig2)
 {
-	sigset_t			sig1_mask;
-	sigset_t			sig2_mask;
+	sigset_t			sig_mask;
 
-	sigemptyset(&sig1_mask);
-	sigemptyset(&sig2_mask);
-	sig1->sa_mask = sig1_mask;
-	sig2->sa_mask = sig2_mask;
+	sigemptyset(&sig_mask);
+	sig1->sa_mask = sig_mask;
+	sig2->sa_mask = sig_mask;
 	sig1->sa_flags = SA_SIGINFO;
 	sig2->sa_flags = SA_SIGINFO;
 	sig1->sa_sigaction = sig1_handler;

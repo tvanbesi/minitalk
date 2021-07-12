@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:51:57 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 16:51:28 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:27:41 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,19 @@ static void
 		kill(pid, SIGUSR2);
 }
 
+static void
+	init_sig(void)
+{
+	struct sigaction	sig;
+	sigset_t			sig_mask;
+
+	sigemptyset(&sig_mask);
+	sig.sa_mask = sig_mask;
+	sig.sa_flags = 0;
+	sig.sa_handler = sig1_handler;
+	sigaction(SIGUSR1, &sig, NULL);
+}
+
 int
 	main(int argc, char **argv)
 {
@@ -35,8 +48,8 @@ int
 	int		i;
 
 	pid = ft_atoi(argv[1]);
-	signal(SIGUSR1, sig1_handler);
 	message = argv[2];
+	init_sig();
 	while (*message)
 	{
 		bs = ctobs(*message);
