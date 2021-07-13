@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:51:57 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 18:27:41 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:50:07 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void
 	sigset_t			sig_mask;
 
 	sigemptyset(&sig_mask);
+	sigaddset(&sig_mask, SIGUSR1);
 	sig.sa_mask = sig_mask;
 	sig.sa_flags = 0;
 	sig.sa_handler = sig1_handler;
@@ -60,6 +61,7 @@ int
 		{
 			send_bit(bs[i - 1], pid);
 			pause();
+			usleep(1000);
 		}
 		free(bs);
 		message++;

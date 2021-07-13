@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:28:47 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 18:27:54 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:45:02 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void
 	sigset_t			sig_mask;
 
 	sigemptyset(&sig_mask);
+	sigaddset(&sig_mask, SIGUSR1);
+	sigaddset(&sig_mask, SIGUSR2);
 	sig1->sa_mask = sig_mask;
 	sig2->sa_mask = sig_mask;
 	sig1->sa_flags = SA_SIGINFO;
