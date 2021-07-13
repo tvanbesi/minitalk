@@ -6,13 +6,11 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:28:47 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/13 11:25:52 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/13 12:02:47 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
-static t_glob	g_glob = {0, 0};
 
 static void
 	interpret_message(int b)
@@ -36,11 +34,11 @@ void
 	sig_server_handler(int n, siginfo_t *info, void *ucontext)
 {
 	(void)ucontext;
-	g_glob.spid = info->si_pid;
+	set_spid(info->si_pid);
 	if (n == SIGUSR1)
-		g_glob.sig_flag = FLAG1;
+		set_sig_flag(FLAG1);
 	else if (n == SIGUSR2)
-		g_glob.sig_flag = FLAG2;
+		set_sig_flag(FLAG2);
 }
 
 void
@@ -78,9 +76,9 @@ int
 	while (1)
 	{
 		pause();
-		interpret_message(g_glob.sig_flag - 1);
-		g_glob.sig_flag = 0;
-		kill(g_glob.spid, SIGUSR1);
+		interpret_message(get_sig_flag() - 1);
+		set_sig_flag(0);
+		kill(get_spid(), SIGUSR1);
 	}
 	return (0);
 }

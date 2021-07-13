@@ -6,7 +6,9 @@ SRCS		= 	conversion.c \
 				ft_putnbr_fd.c \
 				ft_putstr_fd.c \
 				ft_strlen.c \
-				acknowledge.c
+				acknowledge.c \
+				spid.c \
+				sig_flag.c
 OBJS		= ${SRCS:.c=.o}
 CC			= clang
 CFLAGS		= -Wall -Wextra -Werror

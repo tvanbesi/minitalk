@@ -32,5 +32,11 @@ int		bstoc(const char bs[8]);
 int		*received(void);
 void	set_received(int val);
 int		get_received(void);
+int		*spid(void);
+void	set_spid(int val);
+int		get_spid(void);
+int		*sig_flag(void);
+void	set_sig_flag(int val);
+int		get_sig_flag(void);
 
 #endif
