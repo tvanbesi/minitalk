@@ -6,16 +6,17 @@
 # include <signal.h>
 # include <stdlib.h>
 
-//REMOVE FOR DEFENCE
-# include <errno.h>
-# include <string.h>
-# include <stdio.h>
-
 # define	STDOUT	1
 # define	STDIN	0
 
-# define	FLAG1	0
-# define	FLAG2	1
+# define	FLAG1	1
+# define	FLAG2	2
+
+typedef struct s_glob
+{
+	pid_t	spid;
+	int		sig_flag;
+}				t_glob;
 
 void	ft_putchar_fd(char c, int fd);
 void	ft_putnbr_fd(int n, int fd);

@@ -6,15 +6,18 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:51:57 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 18:50:07 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/13 11:13:53 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+static int	g_received = 0;
+
 void
 	sig1_handler(int n)
 {
+	g_received = 1;
 }
 
 static void
@@ -24,6 +27,8 @@ static void
 		kill(pid, SIGUSR1);
 	else if (b == '1')
 		kill(pid, SIGUSR2);
+	while (!g_received)
+		usleep(1000);
 }
 
 static void
@@ -40,6 +45,16 @@ static void
 	sigaction(SIGUSR1, &sig, NULL);
 }
 
+static int
+	sanity_check(int argc, char **argv)
+{
+	if (argc != 3)
+		return (0);
+	if (kill(ft_atoi(argv[1]), 0) != 0)
+		return (0);
+	return (1);
+}
+
 int
 	main(int argc, char **argv)
 {
@@ -48,6 +63,8 @@ int
 	char	*bs;
 	int		i;
 
+	if (!sanity_check(argc, argv))
+		return (-1);
 	pid = ft_atoi(argv[1]);
 	message = argv[2];
 	init_sig();
@@ -60,8 +77,7 @@ int
 		while (i++ < 8)
 		{
 			send_bit(bs[i - 1], pid);
-			pause();
-			usleep(1000);
+			g_received = 0;
 		}
 		free(bs);
 		message++;

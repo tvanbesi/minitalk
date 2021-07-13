@@ -6,13 +6,13 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:28:47 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/12 18:45:02 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/13 11:14:35 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static pid_t	g_spid = 0;
+static t_glob	g_glob = {0, 0};
 
 static void
 	interpret_message(int b)
@@ -35,15 +35,15 @@ static void
 void
 	sig1_handler(int n, siginfo_t *info, void *ucontext)
 {
-	interpret_message(0);
-	g_spid = info->si_pid;
+	g_glob.spid = info->si_pid;
+	g_glob.sig_flag = FLAG1;
 }
 
 void
 	sig2_handler(int n, siginfo_t *info, void *ucontext)
 {
-	interpret_message(1);
-	g_spid = info->si_pid;
+	g_glob.spid = info->si_pid;
+	g_glob.sig_flag = FLAG2;
 }
 
 void
@@ -65,12 +65,14 @@ void
 }
 
 int
-	main(void)
+	main(int argc, char **argv)
 {
 	pid_t				pid;
 	struct sigaction	sig1;
 	struct sigaction	sig2;
 
+	if (argc != 1)
+		return (-1);
 	init_sig(&sig1, &sig2);
 	pid = getpid();
 	ft_putnbr_fd(pid, STDOUT);
@@ -78,8 +80,9 @@ int
 	while (1)
 	{
 		pause();
-		kill(g_spid, SIGUSR1);
-		g_spid = 0;
+		interpret_message(g_glob.sig_flag - 1);
+		g_glob.sig_flag = 0;
+		kill(g_glob.spid, SIGUSR1);
 	}
 	return (0);
 }
