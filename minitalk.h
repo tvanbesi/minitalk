@@ -29,4 +29,8 @@ size_t	ft_strlen(const char *str);
 char	*ctobs(int n);
 int		bstoc(const char bs[8]);
 
+int		*received(void);
+void	set_received(int val);
+int		get_received(void);
+
 #endif

@@ -5,11 +5,11 @@ SRCS		= 	conversion.c \
 				ft_putchar_fd.c \
 				ft_putnbr_fd.c \
 				ft_putstr_fd.c \
-				ft_strlen.c 
+				ft_strlen.c \
+				acknowledge.c
 OBJS		= ${SRCS:.c=.o}
 CC			= clang
-CFLAGS		=
-#CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 NAME		= server
 RM			= rm -f
 

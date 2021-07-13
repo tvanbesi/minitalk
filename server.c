@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:28:47 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/13 11:14:35 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/13 11:25:52 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,14 @@ static void
 }
 
 void
-	sig1_handler(int n, siginfo_t *info, void *ucontext)
+	sig_server_handler(int n, siginfo_t *info, void *ucontext)
 {
+	(void)ucontext;
 	g_glob.spid = info->si_pid;
-	g_glob.sig_flag = FLAG1;
-}
-
-void
-	sig2_handler(int n, siginfo_t *info, void *ucontext)
-{
-	g_glob.spid = info->si_pid;
-	g_glob.sig_flag = FLAG2;
+	if (n == SIGUSR1)
+		g_glob.sig_flag = FLAG1;
+	else if (n == SIGUSR2)
+		g_glob.sig_flag = FLAG2;
 }
 
 void
@@ -58,8 +55,8 @@ void
 	sig2->sa_mask = sig_mask;
 	sig1->sa_flags = SA_SIGINFO;
 	sig2->sa_flags = SA_SIGINFO;
-	sig1->sa_sigaction = sig1_handler;
-	sig2->sa_sigaction = sig2_handler;
+	sig1->sa_sigaction = sig_server_handler;
+	sig2->sa_sigaction = sig_server_handler;
 	sigaction(SIGUSR1, sig1, NULL);
 	sigaction(SIGUSR2, sig2, NULL);
 }
@@ -73,6 +70,7 @@ int
 
 	if (argc != 1)
 		return (-1);
+	(void)argv;
 	init_sig(&sig1, &sig2);
 	pid = getpid();
 	ft_putnbr_fd(pid, STDOUT);

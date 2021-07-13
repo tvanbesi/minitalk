@@ -6,18 +6,17 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:51:57 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/13 11:13:53 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/13 11:45:18 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static int	g_received = 0;
-
 void
 	sig1_handler(int n)
 {
-	g_received = 1;
+	(void)n;
+	set_received(1);
 }
 
 static void
@@ -27,7 +26,7 @@ static void
 		kill(pid, SIGUSR1);
 	else if (b == '1')
 		kill(pid, SIGUSR2);
-	while (!g_received)
+	while (!get_received())
 		usleep(1000);
 }
 
@@ -77,7 +76,7 @@ int
 		while (i++ < 8)
 		{
 			send_bit(bs[i - 1], pid);
-			g_received = 0;
+			set_received(0);
 		}
 		free(bs);
 		message++;
