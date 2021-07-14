@@ -6,7 +6,7 @@
 /*   By: tvanbesi <tvanbesi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 10:28:47 by tvanbesi          #+#    #+#             */
-/*   Updated: 2021/07/13 12:02:47 by tvanbesi         ###   ########.fr       */
+/*   Updated: 2021/07/13 12:20:58 by tvanbesi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int
 	write(STDOUT, "\n", 1);
 	while (1)
 	{
-		pause();
+		while (!get_sig_flag())
+			usleep(1000);
 		interpret_message(get_sig_flag() - 1);
 		set_sig_flag(0);
 		kill(get_spid(), SIGUSR1);
