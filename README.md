@@ -1,6 +1,6 @@
 # minitalk
 
-A client program and a server program (Unbuntu x64)
+A client program and a server program (Unbuntu x64). It is a school project meant to teach us about signals.
 
 `make`
 
